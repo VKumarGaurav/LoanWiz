@@ -23,6 +23,5 @@ public class LoanApplicationResponse {
     private Instant createdAt;
     private Instant updatedAt;
 
-    // Additional fields: username (optional for admin)
 }
 
