@@ -17,4 +17,5 @@ public class UserResponse {
     private String role; // Optional: "USER" or "ADMIN"
     private Instant createdAt;
     private Instant updatedAt;
+
 }

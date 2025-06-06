@@ -1,16 +1,20 @@
 package com.loan.approve.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,81 +29,18 @@ public class User {
     private String password;  // Should be stored hashed
 
     @Column(nullable = false)
-    private String role;  // e.g., "CUSTOMER" or "ADMIN"
+    private String role;  // e.g., "USER" or "ADMIN"
 
-    private LocalDateTime createTime;
+    @Column(nullable = false)
+    private String fullName;
 
-    public User() {
-    }
+    @Column(nullable = false, updatable = false)
+    private Instant createdAt;
 
-    public User(Long id, String username, String email, String password, String role, LocalDateTime createTime) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.createTime = createTime;
-    }
+    private Instant updatedAt;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                ", createTime=" + createTime +
-                '}';
-    }
+    @Column(nullable = false)
+    private Boolean isActive;
 }
 
 

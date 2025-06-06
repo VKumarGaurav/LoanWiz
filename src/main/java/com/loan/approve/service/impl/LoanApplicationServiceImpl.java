@@ -5,17 +5,22 @@ import com.loan.approve.dto.LoanApplicationResponse;
 import com.loan.approve.dto.LoanApplicationResultResponse;
 import com.loan.approve.entity.LoanApplication;
 import com.loan.approve.entity.User;
+import com.loan.approve.exception.handlers.RecordNotFoundException;
 import com.loan.approve.repository.LoanApplicationRepository;
 import com.loan.approve.repository.UserRepository;
 import com.loan.approve.service.services.LoanApplicationService;
 import com.loan.approve.util.LoanStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
+@Slf4j
 public class LoanApplicationServiceImpl implements LoanApplicationService {
 
     @Autowired private UserRepository userRepository;
@@ -25,7 +30,7 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
     public LoanApplicationResponse applyLoan(LoanApplicationRequest request, Long userId) {
         // Validate user exists
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+                .orElseThrow(() -> new RecordNotFoundException("USER_NOT_FOUND_WITH_ID : " + userId));
 
         // Create LoanApplication
         LoanApplication loan = new LoanApplication();
@@ -46,10 +51,15 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
 
     @Override
     public List<LoanApplicationResponse> getUserLoanApplications(Long userId) {
-        List<LoanApplication> loans = loanApplicationRepository.findByUserId(userId);
-        return loans.stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
+        try{
+            List<LoanApplication> loans = loanApplicationRepository.findByUserId(userId);
+            return loans.stream()
+                    .map(this::mapToResponse)
+                    .collect(Collectors.toList());
+        }catch (Exception e) {
+            throw new RecordNotFoundException("RECORD_NOT_FOUND_ : "+userId);
+        }
+
     }
 
     @Override
@@ -62,9 +72,13 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
 
     @Override
     public LoanApplicationResponse getLoanApplicationById(Long applicationId) {
-        LoanApplication loan = loanApplicationRepository.findById(applicationId)
-                .orElseThrow(() -> new RuntimeException("Loan application not found with ID: " + applicationId));
-        return mapToResponse(loan);
+        try{
+            Optional<LoanApplication> loan = loanApplicationRepository.findById(applicationId);
+            return mapToResponse(loan.get());
+        } catch (Exception e) {
+            throw new RecordNotFoundException("RECORD_NOT_FOUND_ : "+applicationId);
+        }
+
     }
 
     @Override
