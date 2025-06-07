@@ -4,6 +4,7 @@ import com.loan.approve.dto.LoanApplicationResponse;
 import com.loan.approve.dto.UserRegistrationRequest;
 import com.loan.approve.dto.UserResponse;
 import com.loan.approve.service.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-@RequestMapping(path = "/user/")
+@RequestMapping(path = "api/user/")
+@Tag(name = "User API", description = "API for managing and searching User ")
 public class UserController {
 
     @Autowired private UserService userService;

@@ -11,3 +11,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+################### elastic search ######################
+  data:
+    elasticsearch:
+      cluster-name: loanWiz
+      cluster-nodes: localhost:9200
+      repositories:
+        enabled: true
+

@@ -5,6 +5,7 @@ import com.loan.approve.dto.LoanApplicationRequest;
 import com.loan.approve.dto.LoanApplicationResponse;
 import com.loan.approve.dto.LoanApplicationResultResponse;
 import com.loan.approve.service.services.LoanApplicationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,8 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping(path = "/loan/")
+@RequestMapping(path = "api/loan/")
+@Tag(name = "Loan Application API", description = "API for managing and searching loan applications")
 public class LoanApplicationController {
 
     @Autowired private LoanApplicationService loanApplicationService;
