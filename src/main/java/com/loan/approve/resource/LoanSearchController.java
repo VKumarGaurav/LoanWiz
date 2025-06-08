@@ -1,7 +1,7 @@
 package com.loan.approve.resource;
 
 import com.loan.approve.entity.LoanApplicationDocument;
-import com.loan.approve.service.services.LoanSearchService;
+import com.loan.approve.service.service.LoanSearchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

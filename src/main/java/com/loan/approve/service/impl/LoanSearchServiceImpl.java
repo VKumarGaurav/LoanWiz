@@ -2,7 +2,7 @@ package com.loan.approve.service.impl;
 
 import com.loan.approve.entity.LoanApplicationDocument;
 import com.loan.approve.repository.LoanApplicationSearchRepository;
-import com.loan.approve.service.services.LoanSearchService;
+import com.loan.approve.service.service.LoanSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

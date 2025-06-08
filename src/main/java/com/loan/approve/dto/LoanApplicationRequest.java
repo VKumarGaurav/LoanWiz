@@ -1,11 +1,16 @@
 package com.loan.approve.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.Builder;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class LoanApplicationRequest {
 
     @NotNull
@@ -28,90 +33,7 @@ public class LoanApplicationRequest {
     @Size(max = 100)
     private String collateral;
 
-    // Getters and setters...
-
-
-    public LoanApplicationRequest() {
-    }
-
-    public LoanApplicationRequest(BigDecimal amount, String purpose, BigDecimal annualIncome, String employment, String collateral) {
-        this.amount = amount;
-        this.purpose = purpose;
-        this.annualIncome = annualIncome;
-        this.employment = employment;
-        this.collateral = collateral;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public String getPurpose() {
-        return purpose;
-    }
-
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
-
-    public BigDecimal getAnnualIncome() {
-        return annualIncome;
-    }
-
-    public void setAnnualIncome(BigDecimal annualIncome) {
-        this.annualIncome = annualIncome;
-    }
-
-    public String getEmployment() {
-        return employment;
-    }
-
-    public void setEmployment(String employment) {
-        this.employment = employment;
-    }
-
-    public String getCollateral() {
-        return collateral;
-    }
-
-    public void setCollateral(String collateral) {
-        this.collateral = collateral;
-    }
-
-    @Override
-    public String toString() {
-        return "LoanApplicationRequest{" +
-                "amount=" + amount +
-                ", purpose='" + purpose + '\'' +
-                ", annualIncome=" + annualIncome +
-                ", employment='" + employment + '\'' +
-                ", collateral='" + collateral + '\'' +
-                '}';
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

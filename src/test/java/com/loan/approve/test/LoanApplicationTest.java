@@ -4,7 +4,7 @@ import com.loan.approve.dto.LoanApplicationRequest;
 import com.loan.approve.dto.LoanApplicationResponse;
 import com.loan.approve.dto.LoanApplicationResultResponse;
 import com.loan.approve.resource.LoanApplicationController;
-import com.loan.approve.service.services.LoanApplicationService;
+import com.loan.approve.service.service.LoanApplicationService;
 import com.loan.approve.util.LoanStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

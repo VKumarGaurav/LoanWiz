@@ -4,7 +4,7 @@ package com.loan.approve.resource;
 import com.loan.approve.dto.LoanApplicationRequest;
 import com.loan.approve.dto.LoanApplicationResponse;
 import com.loan.approve.dto.LoanApplicationResultResponse;
-import com.loan.approve.service.services.LoanApplicationService;
+import com.loan.approve.service.service.LoanApplicationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

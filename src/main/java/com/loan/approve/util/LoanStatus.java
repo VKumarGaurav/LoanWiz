@@ -1,7 +1,13 @@
 package com.loan.approve.util;
 
+
 public enum LoanStatus {
-    PENDING,
+    DRAFT,
+    SUBMITTED,
+    UNDER_REVIEW,
     APPROVED,
-    REJECTED
+    REJECTED,
+    PENDING,
+    DISBURSED,
+    CANCELLED
 }

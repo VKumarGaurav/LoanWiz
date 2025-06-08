@@ -1,4 +1,4 @@
-package com.loan.approve.service.services;
+package com.loan.approve.service.service;
 
 import com.loan.approve.entity.LoanApplicationDocument;
 

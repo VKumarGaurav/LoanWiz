@@ -8,7 +8,8 @@ import com.loan.approve.entity.User;
 import com.loan.approve.exception.handlers.RecordNotFoundException;
 import com.loan.approve.repository.LoanApplicationRepository;
 import com.loan.approve.repository.UserRepository;
-import com.loan.approve.service.services.LoanApplicationService;
+import com.loan.approve.service.service.LoanApplicationService;
+import com.loan.approve.util.EmploymentStatus;
 import com.loan.approve.util.LoanStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
         loan.setAmount(request.getAmount());
         loan.setPurpose(request.getPurpose());
         loan.setAnnualIncome(request.getAnnualIncome());
-        loan.setEmployment(request.getEmployment());
+        loan.setEmployment(EmploymentStatus.valueOf(request.getEmployment()));
         loan.setCollateral(request.getCollateral());
         loan.setStatus(LoanStatus.PENDING);
         loan.setCreatedAt(Instant.now());

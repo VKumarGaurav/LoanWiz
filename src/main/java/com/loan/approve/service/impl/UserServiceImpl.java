@@ -8,12 +8,11 @@ import com.loan.approve.entity.User;
 import com.loan.approve.exception.handlers.RecordNotFoundException;
 import com.loan.approve.repository.LoanApplicationRepository;
 import com.loan.approve.repository.UserRepository;
-import com.loan.approve.service.services.UserService;
+import com.loan.approve.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

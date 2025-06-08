@@ -1,6 +1,5 @@
-package com.loan.approve.service.services;
+package com.loan.approve.service.service;
 
-import com.loan.approve.dto.LoanApplicationRequest;
 import com.loan.approve.dto.LoanApplicationResponse;
 import com.loan.approve.dto.UserRegistrationRequest;
 import com.loan.approve.dto.UserResponse;

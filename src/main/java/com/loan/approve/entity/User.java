@@ -3,6 +3,7 @@ package com.loan.approve.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
@@ -41,6 +42,12 @@ public class User {
 
     @Column(nullable = false)
     private Boolean isActive;
+
+    @Column(precision = 19, scale = 2)  // adjust as needed
+    private BigDecimal liquidAssets;
+
+    @Column(precision = 19, scale = 2)
+    private BigDecimal currentLiabilities;
 }
 
 

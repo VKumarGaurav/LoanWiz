@@ -3,7 +3,7 @@ package com.loan.approve.resource;
 import com.loan.approve.dto.LoanApplicationResponse;
 import com.loan.approve.dto.UserRegistrationRequest;
 import com.loan.approve.dto.UserResponse;
-import com.loan.approve.service.services.UserService;
+import com.loan.approve.service.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
