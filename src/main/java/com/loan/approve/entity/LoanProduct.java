@@ -37,4 +37,7 @@ public class LoanProduct {
 
     private String termOptions;
     private boolean active;
+
+    private Integer termInMonths;
+
 }

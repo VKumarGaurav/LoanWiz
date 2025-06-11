@@ -25,4 +25,19 @@ public class GlobalExceptionHandlers {
 
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
+
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ExceptionMessage> resourceNotFoundExceptionHandler(
+            RecordNotFoundException exception,
+            WebRequest request
+    ){
+        ExceptionMessage message = ExceptionMessage.builder()
+                .TIMESTAMP(LocalDateTime.now())
+                .MESSAGE(exception.getMessage())
+                .DETAILS(request.getDescription(false) )
+                .build();
+
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
 }
