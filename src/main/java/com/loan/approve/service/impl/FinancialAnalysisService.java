@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 
 import com.loan.approve.dto.*;
 import com.loan.approve.dto.FinancialDataDto;
+import com.loan.approve.entity.Applicant;
 import com.loan.approve.entity.LoanApplication;
 import com.loan.approve.entity.LoanProduct;
-import com.loan.approve.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FinancialAnalysisService {
 
-    public static BigDecimal calculateLiquidityRatio(User applicant) {
+    public static BigDecimal calculateLiquidityRatio(Applicant applicant) {
         BigDecimal liquidAssets = applicant.getLiquidAssets();
         BigDecimal currentLiabilities = applicant.getCurrentLiabilities();
 

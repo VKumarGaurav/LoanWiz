@@ -1,6 +1,6 @@
 package com.loan.approve.repository;
 
-import com.loan.approve.dto.RiskCalculationParameters;
+import com.loan.approve.entity.RiskCalculationParameters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

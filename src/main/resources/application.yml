@@ -12,11 +12,67 @@ spring:
       ddl-auto: update
     show-sql: true
 
-################### elastic search ######################
+# ------ elastic search ---------------------------------
   data:
     elasticsearch:
       cluster-name: loanWiz
       cluster-nodes: localhost:9200
       repositories:
         enabled: true
+
+# -------- mail settings ----------------------------------
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: your_username
+    password: your_password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+# -------- kafka -------------------------------------------
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: loan-wiz
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+loan:
+  topic:
+    name: loan-application-events
+
+credit:
+  topic:
+    name: credit-assessment-events
+
+approval:
+  topic:
+    name: approval-decision-events
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

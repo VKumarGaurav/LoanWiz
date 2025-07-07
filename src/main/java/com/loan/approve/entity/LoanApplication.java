@@ -89,4 +89,9 @@ public class LoanApplication {
 
     private LoanStatus loanStatus;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "applicant_id")
+    private Applicant applicant;
+
+
 }

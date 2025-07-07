@@ -11,6 +11,7 @@ import com.loan.approve.repository.ApplicantRepository;
 import com.loan.approve.repository.LoanApplicationRepository;
 import com.loan.approve.service.service.CreditAssessmentService;
 import com.loan.approve.util.CreditBureauType;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,24 +29,21 @@ import java.util.Collections;
 @Transactional
 public class CreditAssessmentServiceImpl implements CreditAssessmentService {
 
-    private final ApplicantRepository applicantRepository;
-    private final LoanApplicationRepository loanApplicationRepository;
-    private final RestTemplate restTemplate;
-    private final CreditBureauConfig creditBureauConfig;
-    private final RiskCalculationEngine riskCalculationEngine;
-
     @Autowired
-    public CreditAssessmentServiceImpl(ApplicantRepository applicantRepository,
-                                       LoanApplicationRepository loanApplicationRepository,
-                                       RestTemplate restTemplate,
-                                       CreditBureauConfig creditBureauConfig,
-                                       RiskCalculationEngine riskCalculationEngine) {
-        this.applicantRepository = applicantRepository;
-        this.loanApplicationRepository = loanApplicationRepository;
+    private   ApplicantRepository applicantRepository;
+    @Autowired
+    private   LoanApplicationRepository loanApplicationRepository;
+    @Autowired
+    private   CreditBureauConfig creditBureauConfig;
+    @Autowired
+    private   RiskCalculationEngine riskCalculationEngine;
+
+    private final  RestTemplate restTemplate;
+
+    public CreditAssessmentServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.creditBureauConfig = creditBureauConfig;
-        this.riskCalculationEngine = riskCalculationEngine;
     }
+
 
     @Override
     public CreditScoreResponse getCreditScore(Long applicantId, CreditBureauType bureauType) {
@@ -65,6 +63,7 @@ public class CreditAssessmentServiceImpl implements CreditAssessmentService {
                 CreditBureauResponse.class
         );
 
+        assert bureauResponse != null;
         return mapToCreditScoreResponse(bureauResponse, bureauType);
     }
 
@@ -100,24 +99,41 @@ public class CreditAssessmentServiceImpl implements CreditAssessmentService {
 
     @Override
     public FinancialHealthAssessment evaluateFinancialHealth(Long applicantId) {
-        User applicant = (User) applicantRepository.findByIdWithFinancialData(applicantId)
+        // Remove the cast to User and use Applicant directly
+        Applicant applicant = applicantRepository.findByIdWithFinancialData(applicantId)
                 .orElseThrow(() -> new IllegalArgumentException("Applicant not found"));
 
         FinancialDataDto financialData = getFinancialData(applicantId);
         CreditScoreResponse creditScore = getCreditScore(applicantId, CreditBureauType.EQUIFAX);
+        assert financialData != null;
         DebtToIncomeRatio dti = calculateDTI(financialData);
 
         BigDecimal liquidityRatio = FinancialAnalysisService.calculateLiquidityRatio(applicant);
         BigDecimal savingsRatio = FinancialAnalysisService.calculateSavingsRatio(financialData);
 
         return FinancialHealthAssessment.builder()
-                .overallRating(FinancialAnalysisService.determineFinancialHealthRating(creditScore.getScore(), dti.getRatio(), liquidityRatio))
-                .healthScore(FinancialAnalysisService.calculateHealthScore(creditScore.getScore(), dti.getRatio(), liquidityRatio, savingsRatio))
-                .positiveFactors(FinancialAnalysisService.identifyPositiveFactors(creditScore, dti, financialData))
-                .negativeFactors(FinancialAnalysisService.identifyNegativeFactors(creditScore, dti, financialData))
+                .overallRating(FinancialAnalysisService.determineFinancialHealthRating(
+                        creditScore.getScore(),
+                        dti.getRatio(),
+                        liquidityRatio))
+                .healthScore(FinancialAnalysisService.calculateHealthScore(
+                        creditScore.getScore(),
+                        dti.getRatio(),
+                        liquidityRatio,
+                        savingsRatio))
+                .positiveFactors(FinancialAnalysisService.identifyPositiveFactors(
+                        creditScore,
+                        dti,
+                        financialData))
+                .negativeFactors(FinancialAnalysisService.identifyNegativeFactors(
+                        creditScore,
+                        dti,
+                        financialData))
                 .liquidityRatio(liquidityRatio)
                 .savingsRatio(savingsRatio)
-                .redFlagsPresent(FinancialAnalysisService.checkForRedFlags(creditScore, financialData))
+                .redFlagsPresent(FinancialAnalysisService.checkForRedFlags(
+                        creditScore,
+                        financialData))
                 .build();
     }
 
@@ -135,6 +151,7 @@ public class CreditAssessmentServiceImpl implements CreditAssessmentService {
 
         CreditScoreResponse creditScore = getCreditScore(application.getUser().getId(), CreditBureauType.EQUIFAX);
         FinancialDataDto financialData = getFinancialData(application.getUser().getId());
+        assert financialData != null;
         DebtToIncomeRatio dti = calculateDTI(financialData);
 
         EligibilityResult result = new EligibilityResult();
@@ -214,6 +231,11 @@ public class CreditAssessmentServiceImpl implements CreditAssessmentService {
         if (ratio.compareTo(new BigDecimal("0.35")) <= 0) return "GOOD";
         if (ratio.compareTo(new BigDecimal("0.50")) <= 0) return "ACCEPTABLE";
         return "POOR";
+    }
+
+    public Applicant getApplicantWithFinancialData(Long applicantId) {
+        return applicantRepository.findByIdWithFinancialData(applicantId)
+                .orElseThrow(() -> new EntityNotFoundException("Applicant not found with id: " + applicantId));
     }
 
 }

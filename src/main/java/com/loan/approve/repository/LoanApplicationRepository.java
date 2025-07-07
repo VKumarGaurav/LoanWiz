@@ -15,4 +15,11 @@ public interface LoanApplicationRepository extends JpaRepository<LoanApplication
 
     @Query("SELECT la FROM LoanApplication la JOIN FETCH la.user WHERE la.id = :applicationId")
     Optional<LoanApplication> findByIdWithApplicant(@Param("applicationId") Long applicationId);
+
+
+    @Query("SELECT la FROM LoanApplication la " +
+            "JOIN FETCH la.applicant a " +
+            "JOIN FETCH a.financialProfile fp " +  // Changed from financialData to financialProfile
+            "WHERE a.id = :applicantId")
+    List<LoanApplication> findByApplicantIdWithFinancialData(@Param("applicantId") Long applicantId);
 }

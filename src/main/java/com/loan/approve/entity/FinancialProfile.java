@@ -20,7 +20,7 @@ public class FinancialProfile {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_id")
-    private Applicant applicant;
+    private Applicant applicant;  // Owning side of the relationship
 
     private BigDecimal annualIncome;
     private BigDecimal monthlyIncome;

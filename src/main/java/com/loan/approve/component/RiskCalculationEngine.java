@@ -3,29 +3,26 @@ package com.loan.approve.component;
 import com.loan.approve.dto.*;
 import com.loan.approve.entity.LoanApplication;
 import com.loan.approve.entity.LoanProductRules;
+import com.loan.approve.entity.RiskCalculationParameters;
 import com.loan.approve.repository.LoanProductRulesRepository;
+import com.loan.approve.repository.RiskCalculationParametersRepository;
 import com.loan.approve.repository.RiskParametersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 
 @Component
+
 public class RiskCalculationEngine {
+    @Autowired
+    private   RiskParametersRepository riskParametersRepository;
+    @Autowired
+    private   LoanProductRulesRepository loanProductRulesRepository;
 
-    private final RiskParametersRepository riskParametersRepository;
-    private final LoanProductRulesRepository loanProductRulesRepository;
-    private final RiskCalculationParameters riskCalculationParameters;
-
-    public RiskCalculationEngine(RiskParametersRepository riskParametersRepository,
-                                 LoanProductRulesRepository loanProductRulesRepository, RiskCalculationParameters riskCalculationParameters) {
-        this.riskParametersRepository = riskParametersRepository;
-        this.loanProductRulesRepository = loanProductRulesRepository;
-        this.riskCalculationParameters = riskCalculationParameters;
-    }
 
     public RiskAssessmentResult calculateRisk(LoanApplication application,
                                               CreditScoreResponse creditScore,

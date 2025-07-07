@@ -5,16 +5,17 @@ import com.loan.approve.service.service.CreditAssessmentService;
 import com.loan.approve.util.CreditBureauType;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/credit-assessment")
-@RequiredArgsConstructor
 @Api(tags = "Credit Assessment API", description = "Endpoints for credit risk assessment and financial analysis")
 public class CreditAssessmentController {
 
-    private final CreditAssessmentService creditAssessmentService;
+    @Autowired
+    private CreditAssessmentService creditAssessmentService;
 
     @ApiOperation(value = "Get Credit Score", notes = "Fetches the credit score of an applicant from the specified credit bureau")
     @ApiResponses(value = {

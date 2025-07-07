@@ -2,12 +2,12 @@ package com.loan.approve.service.impl;
 
 import com.loan.approve.dto.LoanProductDTO;
 import com.loan.approve.entity.LoanProduct;
+import com.loan.approve.exception.handlers.ResourceNotFoundException;
 import com.loan.approve.repository.LoanProductRepository;
 import com.loan.approve.service.service.LoanProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
